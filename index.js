@@ -4,15 +4,18 @@ import { apiRouter } from './router/apiRouter.js';
 const app = express();
 const port = 3000;
 
-app.use('/api', apiRouter);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/', apiRouter);
 
 app.get('/', (req, res) => {
     return res.send('Sveiki atvykę į Banko API!');
 })
 
-app.get('/*', (req, res) => {
-    return res.send('Ups...puslapis nerastas');
-})
+// app.get('/*', (req, res) => {
+//     return res.send('Ups...puslapis nerastas');
+// })
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`)
