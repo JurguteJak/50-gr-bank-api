@@ -77,11 +77,7 @@ apiRouter.post('/api/account', (req, res) => {
 
 apiRouter.get('/api/account/:fullName', (req, res) => {
     const fullName = req.params.fullName;
-    const [name, surname] = fullName.split('-');
-    const account = accounts.find(acc =>
-        acc.name.toLowerCase() === name.toLowerCase()
-        && acc.surname.toLowerCase() === surname.toLowerCase()
-    );
+    const account = findAccount(fullName);
 
     if (!account) {
         return res.json({ message: 'Tokia paskyra nerasta.' });
@@ -93,6 +89,26 @@ apiRouter.get('/api/account/:fullName', (req, res) => {
         birthDate: account.birthDate
     });
 });
+
+apiRouter.delete('/api/account/:fullName', (req, res) => {
+    const fullName = req.params.fullName;
+    const account = findAccount(fullName);
+
+    if (!account) {
+        return res.json({ message: 'Tokia paskyra nerasta.' });
+    }
+
+
+    if (account.balance > 0) {
+        return res.json({ message: 'Sąskaitos ištrinti negalima, nes balansas nėra lygus nuliui' });
+    }
+
+    const index = accounts.indexOf(account);
+    accounts.splice(index, 1);
+
+    return res.json({ message: 'Sąskaita sėkmingai ištrinta' });
+});
+
 
 apiRouter.get('/api/account/:fullName/name', (req, res) => {
     const fullName = req.params.fullName;
@@ -114,4 +130,15 @@ apiRouter.get('/api/account/:fullName/surname', (req, res) => {
     }
 
     return res.json({ surname: account.surname });
+});
+
+apiRouter.get('/api/account/:fullName/dob', (req, res) => {
+    const fullName = req.params.fullName;
+    const account = findAccount(fullName);
+
+    if (!account) {
+        return res.json({ message: 'Tokia paskyra nerasta.' });
+    }
+
+    return res.json({ birthDate: account.birthDate });
 });
