@@ -7,15 +7,11 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', apiRouter);
-
 app.get('/', (req, res) => {
-    return res.send('Sveiki atvykę į Banko API!');
-})
+    return res.send('Sveiki atvykę į Banko API!')
+});
 
-// app.get('/*', (req, res) => {
-//     return res.send('Ups...puslapis nerastas');
-// })
+app.use('/', apiRouter);
 
 app.use((req, res, next) => {
     return res.status(404).send("Sorry can't find that!")
@@ -28,4 +24,4 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`)
-})
+});

@@ -71,6 +71,7 @@ apiRouter.post('/api/account', (req, res) => {
         const newAccount = { name, surname, birthDate, balance: 0 };
         accounts.push(newAccount);
     }
+    createAccount(name, surname, birthDate);
 
     return res.json({ message: 'Paskyra sukurta' });
 });
