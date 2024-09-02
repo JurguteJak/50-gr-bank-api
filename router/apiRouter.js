@@ -21,18 +21,8 @@ function calculateAge(birthDate) {
 }
 
 const accounts = [
-    {
-        name: 'John',
-        surname: 'Doe',
-        birthDate: '1988-08-01',
-        balance: 888
-    },
-    {
-        name: 'Emma',
-        surname: 'Lee',
-        birthDate: '1995-01-31',
-        balance: 2222
-    },
+    { name: 'John', surname: 'Doe', birthDate: '1988-08-01', balance: 888 },
+    { name: 'Emma', surname: 'Lee', birthDate: '1995-01-31', balance: 2222 },
 ];
 
 function findAccount(fullName) {
@@ -110,6 +100,24 @@ apiRouter.delete('/api/account/:fullName', (req, res) => {
     return res.json({ message: 'Sąskaita sėkmingai ištrinta' });
 });
 
+apiRouter.put('/api/account/:fullName', (req, res) => {
+    const fullName = req.params.fullName;
+    const { name, surname, birthDate } = req.body;
+    const account = findAccount(fullName);
+
+    if (!name || !surname || !birthDate) {
+        return res.json({ message: 'Trūksta reikalingos informacijos.' });
+    }
+
+    if (!account) {
+        return res.json({ message: 'Tokia paskyra nerasta.' });
+    }
+    account.name = name;
+    account.surname = surname;
+    account.birthDate = birthDate;
+
+    return res.json({ message: 'Paskyra sėkmingai atnaujinta.' });
+});
 
 apiRouter.get('/api/account/:fullName/name', (req, res) => {
     const fullName = req.params.fullName;

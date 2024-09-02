@@ -23,12 +23,12 @@ Would like to run this project locally? Open terminal and follow these steps:
     ```
 3.  Run the server
 
-            ```sh
-            npm run dev
-            ```
+    ```sh
+    npm run dev
+    ```
 
-        Make sure you have a script named `dev` in your `package.json` that starts the server. It might look like this:
-        `json
+    Make sure you have a script named `dev` in your `package.json` that starts the server. It might look like this:
+    `json
 
     "scripts": {
     "dev": "node index.js"
@@ -62,45 +62,45 @@ Would like to run this project locally? Open terminal and follow these steps:
     - Description: Creates a new account with the provided details.
     - Request Body:
 
-    ```json
-    {
-        "name": "John",
-        "surname": "Doe",
-        "birthDate": "1988-08-01"
-    }
-    ```
+        ```json
+        {
+            "name": "John",
+            "surname": "Doe",
+            "birthDate": "1988-08-01"
+        }
+        ```
 
     - Sample Response (if account is successfully created):
 
-    ```json
-    {
-        "message": "Paskyra sukurta"
-    }
-    ```
+        ```json
+        {
+            "message": "Paskyra sukurta"
+        }
+        ```
 
     - Sample Response (if any required information is missing):
 
-    ```json
-    {
-        "message": "Trūksta reikalingos informacijos."
-    }
-    ```
+        ```json
+        {
+            "message": "Trūksta reikalingos informacijos."
+        }
+        ```
 
     - Sample Response (if the user is not an adult):
 
-    ```json
-    {
-        "message": "Sąskaitą gali susikurti tik pilnamečiai asmenys (18m. ir daugiau)"
-    }
-    ```
+        ```json
+        {
+            "message": "Sąskaitą gali susikurti tik pilnamečiai asmenys (18m. ir daugiau)"
+        }
+        ```
 
     - Sample Response (if an account with the same name and surname already exists):
 
-    ```json
-    {
-        "message": "Sąskaita su tokiu vardu jau egzistuoja"
-    }
-    ```
+        ```json
+        {
+            "message": "Sąskaita su tokiu vardu jau egzistuoja"
+        }
+        ```
 
 2. Delete Account
 
@@ -111,11 +111,11 @@ Would like to run this project locally? Open terminal and follow these steps:
         - URL: `http://localhost:3000/api/account/john-doe`
     - Sample Response (if account is deleted):
 
-    ```json
-    {
-        "message": "Sąskaita sėkmingai ištrinta"
-    }
-    ```
+        ```json
+        {
+            "message": "Sąskaita sėkmingai ištrinta"
+        }
+        ```
 
     - Sample Response (if account is not found):
         ```json
@@ -130,7 +130,34 @@ Would like to run this project locally? Open terminal and follow these steps:
         }
         ```
 
-3. Get Account Name
+3. Update Account Details
+
+    - URL: `/api/account/:fullName`
+    - Method: `PUT`
+    - Description: Updates the details of an existing bank account. You need to provide the full name of the account holder in the URL and the new details in the request body.
+    - URL Parameters:
+        - `fullName`: string (The full name of the account holder in the format `name-surname`)
+    - Request Body:
+        - `name`: string (New name)
+        - `surname`: string (New surname)
+        - `birthDate`: string (New date of birth in `yyyy-mm-dd` format)
+    - Sample URL: `http://localhost:3000/api/account/john-doe`
+    - Sample Request Body:
+        ```json
+        {
+            "name": "John",
+            "surname": "Doe",
+            "birthDate": "1990-01-01"
+        }
+        ```
+    - Sample Response (if update is successful):
+        ```json
+        {
+            "message": "Paskyra sėkmingai atnaujinta."
+        }
+        ```
+
+4. Get Account Name
 
     - URL: `/api/account/:fullName/name`
     - Method: `GET`
@@ -144,7 +171,7 @@ Would like to run this project locally? Open terminal and follow these steps:
         }
         ```
 
-4. Get Account Surname
+5. Get Account Surname
 
     - URL: `/api/account/:fullName/surname`
     - Method: `GET`
@@ -158,7 +185,7 @@ Would like to run this project locally? Open terminal and follow these steps:
         }
         ```
 
-5. Get Account Date of Birth
+6. Get Account Date of Birth
 
     - URL: `/api/account/:fullName/dob`
     - Method: `GET`
